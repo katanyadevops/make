@@ -3,7 +3,7 @@ MAKE_IMAGE ?= newrahmat/make
 MAKEFILE_DIR := $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 
 define make_task
-	docker run --rm -v $(MAKEFILE_DIR)Makefile:/opt/app/Makefile -w /opt/app $(MAKE_IMAGE) sh -c "make $(1)"
+	docker run --rm -v  $(pwd):/opt/app/ -w /opt/app $(MAKE_IMAGE) sh -c "make $(1)"
 endef
 
 
@@ -28,7 +28,7 @@ info:
 	$(call make_task,_info)
 
 _info:
-	@echo $(BRANCH)
+	@echo $(shell git rev-parse --abbrev-ref HEAD)
 
 
 
